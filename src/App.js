@@ -1,86 +1,105 @@
-import { useMemo, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import * as THREE from "three/webgpu";
-import { extend, Canvas, useFrame } from "@react-three/fiber";
-import { OrbitControls } from "@react-three/drei";
-import { uniform, mix, positionLocal, sin, time, vec3, color } from "three/tsl";
-import { easing } from "maath";
+import { extend, Canvas } from "@react-three/fiber";
+import { Environment, Float, Loader, OrbitControls } from "@react-three/drei";
 import { WebGPUPostProcessing } from "./components/WebGPUPostProcessing";
 import { Hall } from "./Hall";
+import { Darth } from "./Darth";
+import { Probe } from "./Probe";
+import { Overlay } from "./components/Overlay";
 
 extend(THREE);
 
 export default function App() {
-  return (
-    <Canvas
-      onCreated={(state) => {
-        state.setSize(window.innerWidth, window.innerHeight);
-      }}
-      gl={(canvas) => {
-        const renderer = new THREE.WebGPURenderer({
-          canvas,
-          powerPreference: "high-performance",
-          antialias: true,
-          alpha: true,
-        });
-        // Initialize WebGPU
-        renderer.init();
-        return renderer;
-      }}
-    >
-      <color attach="background" args={["black"]} />
-      <WebGPUPostProcessing strength={1.5} radius={0.25} />
-      <ambientLight intensity={4} />
-      <directionalLight position={[0, 1, 1]} intensity={2} />
-      <Sphere scale={0.5} position={[-1.5, 2.5, -3]} />
-      <Sphere scale={0.5} position={[-1.3, 0, 0]} />
-      <Sphere scale={0.5} position={[0.6, 0, 2]} />
-      <OrbitControls />
-      <Hall />
-    </Canvas>
-  );
-}
+  const rendererRef = useRef(null);
 
-function Sphere(props) {
-  const { uHovered, colorNode, positionNode, emissiveNode } = useMemo(() => {
-    const uHovered = uniform(0.0);
-    const col1 = color("orange");
-    const col2 = color("hotpink");
-    const col3 = color("red");
-    const currentTime = time.mul(2);
-    const colorNode = mix(
-      mix(col1, col2, sin(currentTime).add(1).div(2)),
-      col3,
-      uHovered
-    );
-    const positionNode = positionLocal.add(
-      vec3(0, sin(currentTime).mul(0.05), 0)
-    );
-    const emissiveNode = colorNode.mul(2.0);
-    return { uHovered, colorNode, positionNode, emissiveNode };
+  useEffect(() => {
+    const handleResize = () => {
+      if (rendererRef.current) {
+        rendererRef.current.setSize(window.innerWidth, window.innerHeight);
+      }
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    // Cleanup
+    return () => window.removeEventListener("resize", handleResize);
   }, []);
-
-  const [hovered, hover] = useState(false);
-  useFrame((state, delta) => {
-    easing.damp(uHovered, "value", hovered ? 1 : 0, 0.1, delta);
-  });
+  const [isPostProcessingEnabled, setIsPostProcessingEnabled] = useState(true);
 
   return (
-    <mesh
-      onPointerOver={() => hover(true)}
-      onPointerOut={() => hover(false)}
-      {...props}
-    >
-      <sphereGeometry />
-      <meshPhysicalNodeMaterial
-        colorNode={colorNode}
-        positionNode={positionNode}
-        emissiveNode={emissiveNode}
-        roughness={0.3}
-        metalness={0.9}
-        emissiveIntensity={2.0}
-        side={THREE.DoubleSide}
-        key={colorNode.uuid}
+    <>
+      <Overlay
+        isPostProcessingEnabled={isPostProcessingEnabled}
+        setIsPostProcessingEnabled={setIsPostProcessingEnabled}
       />
-    </mesh>
+      <Loader />
+
+      <Canvas
+        onCreated={(state) => {
+          state.setSize(window.innerWidth, window.innerHeight);
+        }}
+        dpr={1}
+        camera={{
+          position: [6, -0.4, 0],
+          near: 0.1,
+          far: 100,
+          fov: 80,
+        }}
+        shadows
+        gl={(canvas) => {
+          const renderer = new THREE.WebGPURenderer({
+            canvas,
+            powerPreference: "high-performance",
+            antialias: false,
+            alpha: false,
+          });
+
+          // Initialize WebGPU and store renderer reference
+          renderer.init();
+          rendererRef.current = renderer;
+          return renderer;
+        }}
+      >
+        <color attach="background" args={["black"]} />
+        {isPostProcessingEnabled && (
+          <WebGPUPostProcessing strength={0.15} radius={0.5} />
+        )}
+        <ambientLight intensity={0.1} />
+        <directionalLight position={[-2, 5, 0]} intensity={1} castShadow />
+        <OrbitControls
+          target={[3, -0.4, 0]}
+          zoomSpeed={0.8}
+          dampingFactor={0.08}
+          maxPolarAngle={Math.PI / 1.7}
+          minPolarAngle={Math.PI / 2.5}
+        />
+        <Environment
+          preset="warehouse"
+          environmentIntensity={0.2}
+          environmentRotation={[0.4, 0, 1.4]}
+        />
+        <Hall position={[17, 0, 0]} />
+        <Float speed={3.5} floatIntensity={0.2} rotationIntensity={0.3}>
+          <Probe
+            position={[3, 0, 1.2]}
+            scale={0.05}
+            rotation={[0, Math.PI / 2, 0]}
+          />
+        </Float>
+        <Float speed={3.5} floatIntensity={0.2} rotationIntensity={0.3}>
+          <Probe
+            position={[3.5, -0.8, -1.2]}
+            scale={0.05}
+            rotation={[0, Math.PI / 2, 0]}
+          />
+        </Float>
+        <Darth
+          scale={0.008}
+          position={[3, -1.325, 0.4]}
+          rotation={[0, Math.PI / 2, 0]}
+        />
+      </Canvas>
+    </>
   );
 }

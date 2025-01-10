@@ -11,18 +11,18 @@
     "@react-three/drei": "^9.90.0",
     "@react-three/fiber": "^8.15.0",
     "@types/three": "0.171.0",
+    "maath": "0.10.8",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-scripts": "5.0.1",
-    "three": "^0.160.0",
-    "maath": "0.10.8"
+    "three": "^0.172.0"
   },
-  "devDependencies": {},
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "GENERATE_SOURCEMAP=false react-scripts build",
     "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "deploy": "vercel --prod"
   },
   "browserslist": [
     ">1%",

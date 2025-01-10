@@ -8,32 +8,46 @@ import { useGLTF } from "@react-three/drei";
 export function Hall(props) {
   const { nodes, materials } = useGLTF("/hall-transformed.glb");
 
-  materials.VenatorV3_SmallDoor_WallLight.emissiveIntensity = 3;
+  materials.VenatorV3_SmallDoor_WallLight.emissiveIntensity = 2;
+  materials.Venator_Floor.color.set("black");
+  materials.Venator_Floor.roughness = 0.6;
+
+  //   materials.Venator_Floor.roughnessMap = null;
+  //   materials.Venator_Floor.roughnessMap = null;
+  //   materials.Venator_Floor.metalnessMap = null;
+  //   materials.Venator_Floor.emissiveIntensity = 0;
+
+  materials.Venator_Floor.metalness = 2;
+  materials.VenatorV3_WallPanels.color.set("grey");
+  materials.VenatorV3_WallPanels.roughness = 0.8;
+  materials.VenatorV3_WallPanels.metalness = 0.5;
   return (
     <group {...props} dispose={null}>
       <group rotation={[-Math.PI / 2, 0, 0]} scale={0.012}>
         <group rotation={[Math.PI / 2, 0, 0]}>
           <group position={[-1448.93, -5.342, -159.366]} scale={6.463}>
             <mesh
-              castShadow
               receiveShadow
               geometry={nodes.WallPanel21_VenatorV3_WallPanels_0001.geometry}
               material={materials.VenatorV3_WallPanels}
             />
             <mesh
-              castShadow
               receiveShadow
               geometry={nodes.WallPanel21_VenatorV3_WallPanels_0001_1.geometry}
               material={materials.VenatorV3_LargeDoor}
             />
             <mesh
-              castShadow
               receiveShadow
               geometry={nodes.WallPanel21_VenatorV3_WallPanels_0001_2.geometry}
               material={materials.Venator_Floor}
-            />
+            >
+              {/* <meshPhysicalMaterial
+                color="black"
+                metalness={0.8}
+                roughness={0.7}
+              /> */}
+            </mesh>
             <mesh
-              castShadow
               receiveShadow
               geometry={nodes.WallPanel21_VenatorV3_WallPanels_0001_3.geometry}
               material={materials.VenatorV3_SmallDoor_WallLight}
