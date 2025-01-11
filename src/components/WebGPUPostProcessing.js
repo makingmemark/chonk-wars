@@ -11,11 +11,14 @@ import {
 import { bloom } from "three/addons/tsl/display/BloomNode.js";
 import { ssr } from "three/addons/tsl/display/SSRNode.js";
 import { smaa } from "three/addons/tsl/display/SMAANode.js";
-import { ao } from "three/addons/tsl/display/GTAONode.js";
 import { useThree, useFrame } from "@react-three/fiber";
 import { useEffect, useRef } from "react";
 
-export function WebGPUPostProcessing({ strength = 2.5, radius = 0.5 }) {
+export function WebGPUPostProcessing({
+  strength = 2.5,
+  radius = 0.5,
+  quality = "default",
+}) {
   const { gl: renderer, scene, camera, size } = useThree();
   const postProcessingRef = useRef(null);
 
@@ -53,29 +56,15 @@ export function WebGPUPostProcessing({ strength = 2.5, radius = 0.5 }) {
       camera
     );
     ssrPass.resolutionScale = 0.5;
-    ssrPass.maxDistance.value = 2;
-    ssrPass.opacity.value = 0.6;
-    ssrPass.thickness.value = 0.025;
+    ssrPass.maxDistance.value = 1.3;
+    ssrPass.opacity.value = 0.5;
+    ssrPass.thickness.value = 0.015;
 
     // Create bloom pass
-    const bloomPass = bloom(scenePassColor, strength, radius);
-
-    // Create AO pass
-    const aoPass = ao(scenePassDepth, scenePassNormal, camera);
-    aoPass.resolutionScale = 1;
-    const blendPassAO = aoPass.getTextureNode().mul(scenePassColor);
-
-    aoPass.distanceExponent.value = 1;
-    aoPass.distanceFallOff.value = 0.2;
-    aoPass.radius.value = 0.4;
-    aoPass.scale.value = 15;
-    aoPass.resolutionScale = 1;
-    aoPass.thickness.value = 0.5;
+    const bloomPass = bloom(scenePassColor.add(ssrPass), strength, radius, 0.2);
 
     // Blend SSR over beauty with SMAA
-    const outputNode = smaa(blendColor(scenePassColor, ssrPass))
-      .add(blendPassAO)
-      .add(bloomPass);
+    const outputNode = smaa(blendColor(scenePassColor.add(bloomPass), ssrPass));
 
     // Setup post-processing
     const postProcessing = new THREE.PostProcessing(renderer);
@@ -92,7 +81,7 @@ export function WebGPUPostProcessing({ strength = 2.5, radius = 0.5 }) {
     return () => {
       postProcessingRef.current = null;
     };
-  }, [renderer, scene, camera, size, strength, radius]);
+  }, [renderer, scene, camera, size, strength, radius, quality]);
 
   useFrame(({ gl, scene, camera }) => {
     if (postProcessingRef.current) {

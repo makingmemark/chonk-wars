@@ -1,12 +1,16 @@
 export function Overlay({
   isPostProcessingEnabled,
   setIsPostProcessingEnabled,
+  currentScene,
+  setCurrentScene,
+  quality,
+  setQuality,
 }) {
   return (
     <div className="overlay">
       <header>
         <h1>
-          React Three Fiber <span>WebGPU</span>
+          R3F <span>WebGPU</span>
         </h1>
         <p>
           This is a demo of React Three Fiber using post processing with threejs
@@ -14,19 +18,43 @@ export function Overlay({
         </p>
       </header>
       <footer>
-        <button
-          onClick={() => setIsPostProcessingEnabled(!isPostProcessingEnabled)}
+        <p className="footer-text">
+          Created by <a href="https://andersonmancini.dev">Anderson Mancini</a>
+        </p>
+        <div className="footer-buttons">
+          <button
+            onClick={() => setIsPostProcessingEnabled(!isPostProcessingEnabled)}
+          >
+            {isPostProcessingEnabled ? "Disable" : "Enable"} Post Processing
+          </button>
+          <button
+            className="toggle"
+            onClick={() =>
+              setCurrentScene(currentScene === "vader" ? "royal" : "vader")
+            }
+          >
+            Toggle Scene
+          </button>
+          <button
+            onClick={() =>
+              setQuality(quality === "default" ? "high" : "default")
+            }
+            className="toggle-quality"
+          >
+            {quality === "default" ? "Higher Quality" : "Performance Mode"}
+          </button>
+        </div>
+        <a
+          href="https://github.com/ektogamat/r3f-webgpu-starter"
+          download
+          className="download-button"
         >
-          {isPostProcessingEnabled ? "Disable" : "Enable"} Post Processing
-        </button>
-        <a href="https://github.com/ektogamat/r3f-webgpu-starter" download className="download-button">
           <SvgIcon />
         </a>
       </footer>
     </div>
   );
 }
-
 
 const SvgIcon = (props) => (
   <svg

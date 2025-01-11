@@ -21,7 +21,6 @@ export function Darth(props) {
   materials.darthvader_VaderBodyArmourmat.roughness = 0.2;
   materials.darthvader_VaderBodyArmourmat.metalness = 0.9;
 
-  materials.Laser.emissiveIntensity = 100;
   return (
     <group {...props} dispose={null}>
       <mesh
