@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { Loader } from "@react-three/drei";
 import { WebGPUPostProcessing } from "./components/WebGPUPostProcessing";
 import { Hall } from "./components/Hall";
@@ -6,16 +6,13 @@ import { Overlay } from "./components/Overlay";
 import RoyalNaboo from "./components/Royal";
 import { Light_Environment } from "./components/Light_Environment";
 import { VaderScene } from "./components/VaderScene";
-import { ResizeHandler } from "./components/ResizeHandler";
 import { ManciniCanvas } from "./components/ManciniCanvas";
 
 export default function App() {
-  const rendererRef = useRef(null);
   const [currentScene, setCurrentScene] = useState("vader");
   const [quality, setQuality] = useState("default");
   const [isPostProcessingEnabled, setIsPostProcessingEnabled] = useState(true);
   // Disable frameloop by default, waiting for WebGPU to be ready
-  const [frameloop, setFrameloop] = useState("never");
 
   return (
     <>
@@ -30,12 +27,7 @@ export default function App() {
 
       <Loader />
 
-      <ManciniCanvas
-        quality={quality}
-        frameloop={frameloop}
-        rendererRef={rendererRef}
-        setFrameloop={setFrameloop}
-      >
+      <ManciniCanvas quality={quality}>
         <color attach="background" args={["black"]} />
 
         {isPostProcessingEnabled && (
@@ -66,8 +58,6 @@ export default function App() {
             rotation={[0, 0, 0]}
           />
         </group>
-
-        <ResizeHandler quality={quality} rendererRef={rendererRef} />
       </ManciniCanvas>
     </>
   );

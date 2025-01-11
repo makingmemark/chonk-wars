@@ -1,15 +1,13 @@
 import { Canvas, extend } from "@react-three/fiber";
+import { useRef, useState } from "react";
 import * as THREE from "three/webgpu";
+import { ResizeHandler } from "./ResizeHandler";
 
 extend(THREE);
 
-export function ManciniCanvas({
-  frameloop,
-  quality,
-  children,
-  rendererRef,
-  setFrameloop,
-}) {
+export function ManciniCanvas({ quality, children }) {
+  const rendererRef = useRef();
+  const [frameloop, setFrameloop] = useState("never");
   return (
     <Canvas
       onCreated={(state) => {
@@ -20,7 +18,7 @@ export function ManciniCanvas({
       camera={{
         position: [3.6, -0.4, 0],
         near: 0.1,
-        far: 100,
+        far: 15,
         fov: 56,
         zoom: 0.5,
       }}
@@ -41,6 +39,7 @@ export function ManciniCanvas({
       }}
     >
       {children}
+      <ResizeHandler quality={quality} rendererRef={rendererRef} />
     </Canvas>
   );
 }
