@@ -20,7 +20,7 @@ npm install
 Run this command in your terminal to open a local server at localhost:3000
 
 ```shell
-npm run dev
+npm run start
 ```
 
 ### Can you leave a star please?
