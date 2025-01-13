@@ -32,8 +32,8 @@ export default function App() {
 
         {isPostProcessingEnabled && (
           <WebGPUPostProcessing
-            strength={0.15}
-            radius={0.5}
+            strength={0.25}
+            radius={0.1}
             quality={quality}
           />
         )}
@@ -41,7 +41,7 @@ export default function App() {
         <Light_Environment />
 
         <group position={[-1, 0, 0]}>
-          <Hall position={[17, 0, 0]} scale={[1, 1, 1.3]} />
+          <Hall position={[17, 0, -0.15]} scale={[1, 1, 1.3]} />
 
           <group
             visible={currentScene === "vader"}

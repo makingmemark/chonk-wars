@@ -8,9 +8,9 @@ import { FrontSide } from "three";
 export function Hall(props) {
   const { nodes, materials } = useGLTF("/hall-transformed.glb");
 
-  materials.VenatorV3_SmallDoor_WallLight.emissiveIntensity = 0.6;
+  materials.VenatorV3_SmallDoor_WallLight.emissiveIntensity = 2.6;
   materials.Venator_Floor.color.set("black");
-  materials.Venator_Floor.roughness = 0.6;
+  materials.Venator_Floor.roughness = 0.95;
   materials.Venator_Floor.normalMap = null;
 
   //   materials.Venator_Floor.roughnessMap = null;
@@ -19,6 +19,7 @@ export function Hall(props) {
   //   materials.Venator_Floor.emissiveIntensity = 0;
 
   materials.Venator_Floor.metalness = 1;
+  materials.Venator_Floor.metalnessMap = null;
   materials.VenatorV3_WallPanels.color.set("grey");
   materials.VenatorV3_WallPanels.roughness = 0.8;
   materials.VenatorV3_WallPanels.metalness = 0.5;

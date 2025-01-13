@@ -15,9 +15,9 @@ export function Darth(props) {
   materials.Sabel_svart.emissiveIntensity = 20;
   materials.darthvader_VaderConsolesFlickermat.roughness = 0.2;
   materials.darthvader_VaderCapemat.roughness = 0.2;
-  materials.darthvader_VaderCapemat.metalness = 0.5;
+  materials.darthvader_VaderCapemat.metalness = 0.7;
   materials.darthvader_VaderHelmetRimmat.roughness = 0.3;
-  materials.darthvader_VaderHelmetRimmat.metalness = 0.3;
+  materials.darthvader_VaderHelmetRimmat.metalness = 0.6;
   materials.darthvader_VaderBodyArmourmat.roughness = 0.2;
   materials.darthvader_VaderBodyArmourmat.metalness = 0.9;
 

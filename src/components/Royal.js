@@ -56,22 +56,24 @@ export default function RoyalNaboo(props) {
           />
           <mesh position={[-1.48, -4.1, -0.36]}>
             <cylinderGeometry args={[0.2, 0.01, 2.9, 16, 8, true]} />
-            <meshBasicNodeMaterial
+            <meshStandardNodeMaterial
               key={key}
               colorNode={colorNode}
               transparent
               blending={AdditiveBlending}
               side={DoubleSide}
+              emissiveNode={colorNode}
             />
           </mesh>
           <mesh position={[1.48, -4.1, -0.36]}>
             <cylinderGeometry args={[0.2, 0.01, 2.9, 16, 8, true]} />
-            <meshBasicNodeMaterial
+            <meshStandardNodeMaterial
               key={key}
               colorNode={colorNode}
               transparent
               blending={AdditiveBlending}
               side={DoubleSide}
+              emissiveNode={colorNode}
             />
           </mesh>
           <mesh

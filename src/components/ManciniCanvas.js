@@ -16,13 +16,13 @@ export function ManciniCanvas({ quality, children }) {
       frameloop={frameloop}
       dpr={quality === "default" ? 1 : [1, 1.5]}
       camera={{
-        position: [3.6, -0.4, 0],
+        position: [18.6, -0.6, 0],
         near: 0.1,
-        far: 15,
-        fov: 56,
-        zoom: 0.5,
+        far: 50,
+        fov: 65,
+        // zoom: 1,
       }}
-      shadows
+      shadows={"variance"}
       gl={(canvas) => {
         const renderer = new THREE.WebGPURenderer({
           canvas,

@@ -5,26 +5,29 @@ export function Light_Environment() {
   return (
     <>
       <directionalLight
-        position={[-1, 1, 0.1]}
-        intensity={2}
+        position={[-0.7, 1.8, 0.1]}
+        intensity={6}
         castShadow
-        shadow-mapSize={[512, 512]}
-        shadow-camera-near={0.1}
+        shadow-mapSize={[128, 128]}
+        shadow-camera-near={2}
         shadow-camera-far={100}
         shadow-camera-top={3}
         shadow-camera-right={3}
         shadow-camera-bottom={-3}
         shadow-camera-left={-3}
-        shadow-bias={-0.001}
+        shadow-bias={-0.002}
       />
       <OrbitControls
         target={[2, -0.6, 0]}
         // zoomSpeed={0.8}
+        screenSpacePanning={false}
         dampingFactor={0.08}
         maxPolarAngle={Math.PI / 1.7}
         minPolarAngle={Math.PI / 2.5}
         maxDistance={2.4}
-        minDistance={0.5}
+        minDistance={1}
+        minZoom={0.5}
+        maxZoom={1}
       />
       <Environment
         preset="warehouse"
