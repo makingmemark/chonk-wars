@@ -41,7 +41,7 @@ export default function App() {
         <Light_Environment />
 
         <group position={[-1, 0, 0]}>
-          <Hall position={[17, 0, -0.15]} scale={[1, 1, 1.3]} />
+          <Hall position={[16.3, 0, -0.15]} scale={[1, 1, 1.3]} />
 
           <group
             visible={currentScene === "vader"}

@@ -22,8 +22,8 @@ export function Light_Environment() {
         // zoomSpeed={0.8}
         screenSpacePanning={false}
         dampingFactor={0.08}
-        maxPolarAngle={Math.PI / 1.7}
-        minPolarAngle={Math.PI / 2.5}
+        maxPolarAngle={Math.PI / 1.75}
+        minPolarAngle={Math.PI / 2.7}
         maxDistance={2.4}
         minDistance={1}
         minZoom={0.5}
