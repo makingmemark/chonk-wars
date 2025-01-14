@@ -10,7 +10,7 @@ import { ManciniCanvas } from "./components/ManciniCanvas";
 
 export default function App() {
   const [currentScene, setCurrentScene] = useState("vader");
-  const [quality, setQuality] = useState("default");
+  const [quality, setQuality] = useState("high"); // default is low quality, high is high quality
   const [isPostProcessingEnabled, setIsPostProcessingEnabled] = useState(true);
   // Disable frameloop by default, waiting for WebGPU to be ready
 
