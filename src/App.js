@@ -16,14 +16,14 @@ export default function App() {
 
   return (
     <>
-      <Overlay
+      {/* <Overlay
         isPostProcessingEnabled={isPostProcessingEnabled}
         setIsPostProcessingEnabled={setIsPostProcessingEnabled}
         setCurrentScene={setCurrentScene}
         currentScene={currentScene}
         setQuality={setQuality}
         quality={quality}
-      />
+      /> */}
 
       <Loader />
 

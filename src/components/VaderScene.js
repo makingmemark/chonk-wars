@@ -1,6 +1,7 @@
 import { Float } from "@react-three/drei";
 import { Probe } from "./Probe";
 import { Darth } from "./Darth";
+import { Chonk70703 } from "./Chonk70703";
 
 export function VaderScene() {
   return (
@@ -45,11 +46,17 @@ export function VaderScene() {
           color="cyan"
         />
       </Float>
-      <Darth
+      {/* <Darth
         scale={0.008}
         position={[3.5, -1.325, 0.4]}
         rotation={[0, Math.PI / 2, 0]}
-      />
+      /> */}
+      <Chonk70703
+        scale={0.075}
+        position={[4,-0.7,0]}
+        rotation={[0, 0, 0]}
+        />
+
     </>
   );
 }
