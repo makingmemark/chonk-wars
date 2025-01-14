@@ -14,17 +14,17 @@ export function VaderScene() {
           color="red"
         />
       </Float>
-      <Float speed={6.5} floatIntensity={0.4} rotationIntensity={0.5}>
+      {/* <Float speed={6.5} floatIntensity={0.4} rotationIntensity={0.5}>
         <Probe
           position={[-1.5, 0, -1.5]}
           scale={0.1}
           rotation={[0, Math.PI / 2, 0]}
           color="cyan"
         />
-      </Float>
+      </Float> */}
       <Float speed={3.5} floatIntensity={0.2} rotationIntensity={0.3}>
         <Probe
-          position={[3.5, -0.8, -1.2]}
+          position={[3.5, 0.6, -1.2]}
           scale={0.05}
           rotation={[0, Math.PI / 2, 0]}
           color="red"

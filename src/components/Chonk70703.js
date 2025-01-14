@@ -22,7 +22,7 @@ export function Chonk70703(props) {
     // Check for specific colors and set emissive properties
     if (colorHex === '#ff0021' || colorHex === '#ff3953') { // Red
       newMaterial.emissive = newMaterial.color
-      newMaterial.emissiveIntensity = 11
+      newMaterial.emissiveIntensity = 20
     }
     // Add more color conditions as needed
     // else if (colorHex === '#00ff00') { // Green
