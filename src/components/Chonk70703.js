@@ -36,6 +36,15 @@ export function Chonk70703(props) {
     if (colorHex === '#ff0021' || colorHex === '#ff3953') { // Red
       newMaterial.emissive = newMaterial.color
       newMaterial.emissiveIntensity = 6
+    } else if (colorHex === '#0d0d0d' || colorHex === '#262626' || colorHex === '#000000') {
+      newMaterial.emissive = newMaterial.color
+      // newMaterial.emissiveIntensity = 5
+      // make it shiny
+      newMaterial.roughness = 0
+      newMaterial.metalness = 1
+    } else {
+      newMaterial.emissive = newMaterial.color
+      newMaterial.emissiveIntensity = 0.25
     }
     // Add more color conditions as needed
     // else if (colorHex === '#00ff00') { // Green
