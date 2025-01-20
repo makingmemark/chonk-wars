@@ -103,7 +103,7 @@ footer {
   inherits: false;
 }
 
-footer button {
+footer button, .force-button {
   color: white;
   padding: 1rem 1.3rem;
   border-radius: 0.5rem;
@@ -122,19 +122,20 @@ footer button {
   transition: all 0.3s ease;
 }
 
-footer button:hover {
+footer button:hover, .force-button:hover {
   background: rgb(65, 60, 79);
   color: white;
 }
 
-footer button:hover:after {
+footer button:hover:after, .force-button:hover:after {
   transform: scale(1.5);
   filter: blur(2rem);
   transition: all 0.3s ease;
 }
 
 footer button::after,
-footer button::before {
+footer button::before,
+.force-button::before {
   content: " ";
   position: absolute;
   z-index: -1;
@@ -154,7 +155,8 @@ footer button::before {
   transition: all 0.3s ease;
 }
 
-footer button.toggle::before {
+footer button.toggle::before,
+.force-button::before {
   content: " ";
   position: absolute;
   z-index: -1;
@@ -174,7 +176,8 @@ footer button.toggle::before {
   transition: all 0.3s ease;
 }
 
-footer button::after {
+footer button::after,
+.force-button::after {
   filter: blur(3rem);
 }
 
@@ -245,6 +248,36 @@ footer button::after {
 .download-button:hover {
   background-color: #ffffff7b;
 }
+
+.force-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.95);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  pointer-events: auto;
+}
+
+/* .force-button {
+  padding: 10px 20px;
+  font-size: 1.2rem;
+  background-color: transparent;
+  border: 1px solid white;
+  color: white;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.force-button:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  transform: scale(1.05);
+}
+  */
 
 /* Mobile */
 @media (max-width: 768px) {

@@ -1,3 +1,5 @@
+import React from 'react';
+
 export function Overlay({
   isPostProcessingEnabled,
   setIsPostProcessingEnabled,
@@ -6,22 +8,67 @@ export function Overlay({
   quality,
   setQuality,
 }) {
+  const [forceActivated, setForceActivated] = React.useState(false);
+  const [isSoundOn, setIsSoundOn] = React.useState(true);
+  const audioRef = React.useRef(null);
+
+  React.useEffect(() => {
+    // Create audio element
+    audioRef.current = new Audio('/star-wars-style-march-165111.mp3');
+    audioRef.current.loop = true;
+
+    return () => {
+      if (audioRef.current) {
+        audioRef.current.pause();
+        audioRef.current = null;
+      }
+    };
+  }, []);
+
+  const handleForceButton = () => {
+    setForceActivated(true);
+    if (isSoundOn && audioRef.current) {
+      audioRef.current.play();
+    }
+  };
+
+  const toggleSound = () => {
+    setIsSoundOn(!isSoundOn);
+    if (audioRef.current) {
+      if (!isSoundOn) {
+        audioRef.current.play();
+      } else {
+        audioRef.current.pause();
+      }
+    }
+  };
+
   return (
     <div className="overlay">
+      {!forceActivated && (
+        <div className="force-overlay" style={{ pointerEvents: 'auto' }}>
+          <button
+            className="force-button"
+            onClick={handleForceButton}
+          >
+            Let the Chonk Be With You (Sound On)
+          </button>
+        </div>
+      )}
       <header>
         <h1>
-          R3F <span>WebGPU</span>
+          <span>Chonk Wars</span>
         </h1>
-        <p>
+        {/* <p>
           This is a demo of React Three Fiber using post processing with threejs
           and WebGPU, featuring Screen Space Reflections.
-        </p>
+        </p> */}
       </header>
       <footer>
         <p className="footer-text">
-          Created by <a href="https://andersonmancini.dev">Anderson Mancini</a>
+          Originally by <a href="https://andersonmancini.dev" target="_blank" rel="noopener noreferrer">Anderson Mancini</a> | Updated by <a href="https://x.com/marka_eth" target="_blank" rel="noopener noreferrer">marka</a>
         </p>
-        <div className="footer-buttons">
+        {/* <div className="footer-buttons">
           <button
             onClick={() => setIsPostProcessingEnabled(!isPostProcessingEnabled)}
           >
@@ -43,15 +90,33 @@ export function Overlay({
           >
             {quality === "default" ? "Higher Quality" : "Performance Mode"}
           </button>
-        </div>
-        <a
+        </div> */}
+        {/* <a
           href="https://github.com/ektogamat/r3f-webgpu-starter"
           download
           className="download-button"
         >
           <SvgIcon />
-        </a>
+        </a> */}
       </footer>
+      <button
+        className="sound-toggle"
+        onClick={toggleSound}
+        style={{
+          pointerEvents: 'auto',
+          position: 'fixed',
+          bottom: '20px',
+          right: '20px',
+          backgroundColor: 'transparent',
+          border: 'none',
+          color: 'white',
+          opacity: 0.3,
+          cursor: 'pointer',
+          fontSize: '0.6rem',
+        }}
+      >
+        Sound {isSoundOn ? 'Off' : 'On'}
+      </button>
     </div>
   );
 }
